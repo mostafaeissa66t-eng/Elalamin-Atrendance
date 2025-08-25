@@ -1,5 +1,5 @@
 // === المتغيرات والعناصر الأساسية ===
-const scriptURL = 'https://script.google.com/macros/s/AKfycbzCPAIfZ8mApI-Q71UtD6WxRVGIMp_7mJWh-OUWMhh3Y3LTc-uuhzwHeF4PJWT_dmqn/exec'; // <-- ضع رابط تطبيق الويب هنا
+const scriptURL = 'https://script.google.com/macros/s/AKfycbx68ID6PAkrP-QIT6cqHeB0D-iH2V8xBaEZx4dB8sno5Ef70sPvP-wPckStmHveoOWA/exec'; // <-- ضع رابط تطبيق الويب هنا
 const form = document.getElementById('attendanceForm');
 const submitButton = document.getElementById('submitButton');
 const messageDiv = document.getElementById('message');
