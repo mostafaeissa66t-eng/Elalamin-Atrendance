@@ -17,6 +17,9 @@ const mobileInstructions = document.getElementById('mobile-instructions');
 let hasLocationPermission = false;
 let capturedGeoLocation = 'لم يتم التحديد';
 
+
+// === الدوال المساعدة ===
+
 /**
  * دالة للتحقق مما إذا كان الجهاز موبايل
  * @returns {boolean}
@@ -24,6 +27,20 @@ let capturedGeoLocation = 'لم يتم التحديد';
 function isMobileDevice() {
     return /Mobi|Android/i.test(navigator.userAgent);
 }
+
+/**
+ * دالة لإنشاء أو الحصول على معرف فريد وثابت للمتصفح
+ * @returns {string} معرف المتصفح الفريد
+ */
+function getDeviceId() {
+    let deviceId = localStorage.getItem('deviceId');
+    if (!deviceId) {
+        deviceId = `user-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+        localStorage.setItem('deviceId', deviceId);
+    }
+    return deviceId;
+}
+
 
 // === الدوال الخاصة بالنوافذ المنبثقة ===
 function showDeniedModal() {
@@ -77,10 +94,8 @@ async function checkInitialPermission() {
         showPermissionModal();
         return;
     }
-
     try {
         const permissionStatus = await navigator.permissions.query({ name: 'geolocation' });
-
         if (permissionStatus.state === 'granted') {
             hasLocationPermission = true;
             submitButton.disabled = false;
@@ -93,7 +108,6 @@ async function checkInitialPermission() {
             submitButton.disabled = true;
             showDeniedModal();
         }
-
         permissionStatus.onchange = () => { window.location.reload(); };
     } catch (error) {
         console.error("حدث خطأ أثناء التحقق من الأذونات:", error);
@@ -139,21 +153,42 @@ async function handleFormSubmit(e) {
         department: formData.get('department'),
         projectName: formData.get('projectName'),
         deviceType: navigator.userAgent,
-        deviceId: localStorage.getItem('deviceId') || `user-${Date.now()}`,
+        deviceId: getDeviceId(),
         ipAddress: ipAddress,
         geoLocation: capturedGeoLocation
     };
 
     try {
-        const response = await fetch(scriptURL, { method: 'POST', body: JSON.stringify(data), mode: 'no-cors' });
-        // Since we are using doPost and returning JSON, the 'no-cors' mode might prevent reading the response.
-        // Let's assume the request will succeed and give a generic success message.
-        messageDiv.textContent = 'تم إرسال البيانات بنجاح!';
-        messageDiv.className = 'success';
-        form.reset();
+        // تم تحديث هذا الجزء ليكون أكثر قوة
+        const response = await fetch(scriptURL, {
+            method: 'POST',
+            mode: 'cors',
+            cache: 'no-cache',
+            headers: {
+                // ملاحظة: Apps Script يعمل بشكل أفضل مع text/plain عند إرسال JSON بهذه الطريقة
+                'Content-Type': 'text/plain;charset=utf-8', 
+            },
+            redirect: 'follow',
+            body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            if (result.status === 'success') {
+                messageDiv.textContent = 'تم التسجيل بنجاح!';
+                messageDiv.className = 'success';
+                form.reset();
+            } else {
+                throw new Error(result.message || 'حدث خطأ غير معروف في السيرفر');
+            }
+        } else {
+            throw new Error(`فشل الاتصال بالسيرفر. الحالة: ${response.status}`);
+        }
+
     } catch (error) {
-        messageDiv.textContent = 'حدث خطأ: ' + error.message;
+        messageDiv.textContent = 'فشل الإرسال: ' + error.message;
         messageDiv.className = 'error';
+        console.error('Fetch Error:', error);
     } finally {
         messageDiv.style.display = 'block';
         if (hasLocationPermission) { submitButton.disabled = false; }
@@ -166,5 +201,5 @@ document.addEventListener('DOMContentLoaded', checkInitialPermission);
 form.addEventListener('submit', handleFormSubmit);
 grantPermissionBtn.addEventListener('click', () => {
     hideModals();
-    requestLocation().catch(() => { });
+    requestLocation().catch(() => {});
 });
