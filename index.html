@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الحضور والانصراف</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="container">
+        <img src="TURNKEY.png" alt="شعار الشركة" class="logo">
+
+        <h1>تسجيل الحضور والانصراف</h1>
+
+        <form id="attendanceForm">
+            <div class="form-group">
+                <label for="recordType">نوع التسجيل:</label>
+                <select id="recordType" name="recordType" required>
+                    <option value="">-- اختر نوع التسجيل --</option>
+                    <option value="تسجيل الحضور">تسجيل حضور</option>
+                    <option value="تسجيل الانصراف">تسجيل انصراف</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="fullName">الاسم بالكامل:</label>
+                <input type="text" id="fullName" name="fullName" required>
+            </div>
+            <div class="form-group">
+                <label for="jobTitle">الوظيفة:</label>
+                <input type="text" id="jobTitle" name="jobTitle" required>
+            </div>
+            <div class="form-group">
+                <label for="appointmentType">نوع التعيين:</label>
+                <select id="appointmentType" name="appointmentType" required>
+                    <option value="">-- اختر نوع التعيين --</option>
+                    <option value="سويدى">سويدى</option>
+                    <option value="ضحى">ضحى</option>
+                    <option value="بروفشنال">بروفشنال</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="projectName">اسم المشروع:</label>
+                <select id="projectName" name="projectName" required>
+                    <option value="">-- اختر المشروع --</option>
+                    <option value="مشروع العلمين">مشروع العلمين</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="department">القسم:</label>
+                <select id="department" name="department" required>
+                    <option value="">-- القسم --</option>
+                    <option value="قسم تنفيذ الكهرباء">قسم تنفيذ الكهرباء</option>
+                    <option value="قسم تنفيذ المدنى">قسم تنفيذ المدنى</option>
+                    <option value="قسم الجودة">قسم الجودة</option>
+                    <option value="قسم المخازن">قسم المخازن</option>
+                    <option value="قسم الصيانة">قسم الصيانة</option>
+                    <option value="قسم المساحة">قسم المساحة</option>
+                    <option value="قسم السلامة والصحة المهنية">قسم السلامة والصحة المهنية</option>
+                    <option value="الشؤون القانونية">الشؤون القانونية</option>
+                    <option value="مكتب فنى">مكتب فنى</option>
+                    <option value="الإداريين">الإداريين</option>
+                    <option value="المحاسبين">المحاسبين</option>
+                    <option value="DC">DC</option>
+                    <option value="خدمات مساعدة">خدمات مساعدة</option>
+                    <option value="السائقين">السائقين</option>
+                </select>
+            </div>
+            <button type="submit" id="submitButton">تسجيل</button>
+        </form>
+        <div id="message"></div>
+    </div>
+
+    <div id="overlay" class="overlay"></div>
+
+    <div id="permissionModal" class="modal">
+        <h2>إذن الوصول للموقع مطلوب</h2>
+        <p>لتتمكن من تسجيل الحضور أو الانصراف، يجب السماح للموقع بالوصول إلى موقعك الجغرافي. هذه المعلومة ضرورية لتوثيق
+            عملية التسجيل.</p>
+
+        <p>اضغط على "متابعة" ثم اختر "Allow" أو "سماح" في النافذة التي ستظهر من المتصفح.</p>
+        <button id="grantPermissionBtn">متابعة</button>
+    </div>
+
+    <div id="deniedModal" class="modal">
+        <h2>تم حظر الوصول للموقع!</h2>
+        <p>لا يمكنك استخدام النظام لأنك قمت بحظر إذن الوصول للموقع. لإعادة تفعيله، اتبع الخطوات المناسبة لجهازك:</p>
+
+        <div id="desktop-instructions" class="instructions-set">
+            <ol class="instructions">
+                <li>اضغط على أيقونة <b>القفل (🔒)</b> بجوار عنوان الموقع في الأعلى.</li>
+                <li>ابحث عن خيار "الموقع" أو "Location" وقم بتفعيله.</li>
+                <li>أعد تحميل الصفحة لتطبيق التغييرات.</li>
+            </ol>
+
+        </div>
+
+        <div id="mobile-instructions" class="instructions-set">
+            <h4>لمستخدمي أندرويد (Android):</h4>
+            <ol class="instructions">
+                <li>اذهب إلى <b>إعدادات الهاتف > التطبيقات</b>.</li>
+                <li>ابحث عن المتصفح الذي تستخدمه (مثل Chrome) واضغط عليه.</li>
+                <li>اذهب إلى <b>الأذونات > الموقع</b>، واختر <b>"السماح عند استخدام التطبيق"</b>.</li>
+            </ol>
+
+
+            <hr class="separator">
+
+            <h4>لمستخدمي آيفون (iOS):</h4>
+            <ol class="instructions">
+                <li>اذهب إلى <b>الإعدادات > الخصوصية والأمان > خدمات الموقع</b>.</li>
+                <li>ابحث عن المتصفح (Safari) واضغط عليه.</li>
+                <li>اختر <b>"أثناء استخدام التطبيق"</b>.</li>
+            </ol>
+
+        </div>
+
+        <p class="final-tip">إذا استمرت المشكلة، جرب متصفحًا آخر أو تواصل مع الإدارة.</p>
+        <button onclick="location.reload()">إعادة تحميل الصفحة</button>
+    </div>
+    <script defer src="script.js"></script>
+
+</body>
+
+</html>
