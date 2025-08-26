@@ -133,12 +133,15 @@ button:disabled {
     background: #fff;
     padding: 30px;
     border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
     z-index: 1001;
     width: 90%;
     max-width: 500px;
     display: none;
     text-align: center;
+    /* --- الأسطر الجديدة --- */
+    max-height: 85vh; /* تحديد أقصى ارتفاع للنافذة */
+    overflow-y: auto; /* إضافة سكرول تلقائي عند الحاجة */
 }
 
 .modal h2 {
@@ -238,6 +241,11 @@ button:disabled {
     font-weight: bold;
     transition: background-color 0.3s, transform 0.2s;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* كود لتجميد الصفحة عند فتح البوب أب */
+body.modal-open {
+    overflow: hidden;
 }
 
 .whatsapp-link a:hover {
