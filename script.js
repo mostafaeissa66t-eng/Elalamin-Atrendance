@@ -42,7 +42,6 @@ function getDeviceId() {
 }
 
 
-// === الدوال الخاصة بالنوافذ المنبثقة ===
 function showDeniedModal() {
     if (isMobileDevice()) {
         desktopInstructions.style.display = 'none';
@@ -53,17 +52,20 @@ function showDeniedModal() {
     }
     overlay.style.display = 'block';
     deniedModal.style.display = 'block';
+    document.body.classList.add('modal-open'); // <-- إضافة هذا السطر
 }
 
 function showPermissionModal() {
     overlay.style.display = 'block';
     permissionModal.style.display = 'block';
+    document.body.classList.add('modal-open'); // <-- إضافة هذا السطر
 }
 
 function hideModals() {
     overlay.style.display = 'none';
     permissionModal.style.display = 'none';
     deniedModal.style.display = 'none';
+    document.body.classList.remove('modal-open'); // <-- إضافة هذا السطر
 }
 
 // === الدوال الخاصة بالموقع الجغرافي ===
