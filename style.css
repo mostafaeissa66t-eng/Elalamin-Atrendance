@@ -215,3 +215,32 @@ button:disabled {
         font-size: 25px;
     }
 }
+
+/* ... (كل الأكواد السابقة كما هي) ... */
+
+/* === تنسيق رابط الواتساب الجديد === */
+.whatsapp-link {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+    font-size: 1em;
+    color: #333;
+}
+
+.whatsapp-link a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #25D366; /* لون واتساب الأخضر */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.whatsapp-link a:hover {
+    background-color: #128C7E; /* لون أغمق عند المرور بالفأرة */
+    transform: translateY(-2px);
+}
